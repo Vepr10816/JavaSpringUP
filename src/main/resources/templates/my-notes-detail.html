@@ -1,0 +1,35 @@
+<!DOCTYPE html >
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>Заметки</title>
+  <link th:href="@{/css/site.css}" rel="stylesheet" />
+  <div th:insert="blocks/header" />
+</head>
+<body>
+<form method="post" th:object="${notes}">
+  <div class=ex1><h1 th:text="*{nameNotes}"/></div>
+  <br/>
+  <br/>
+  <br/>
+  <div align="center" >
+    <input type="text" name="nameNotes" placeholder="Название заметки" th:value="*{nameNotes}"/>
+    <div style="color: red" th:if="${#fields.hasErrors('nameNotes')}" th:errors="*{nameNotes}" />
+  </div>
+  <br/>
+  <div align="center">
+    <textarea name="descriptionNotes" placeholder="Содержание" th:text="*{descriptionNotes}"></textarea>
+  </div>
+  <br/>
+  <div align="center">
+    <input type="date" name="deadLineDate" placeholder="Дата дэлайна" th:value="*{deadLineDate}"/>
+    <input type="time" name="deadLineTime" placeholder="Время дэлайна" step="2" th:value="*{deadLineTime}"/>
+  </div>
+  <br/>
+  <div align="center"><button type="submit" class="green">Сохранить</button></div>
+</form>
+</body>
+<footer>
+  <div th:insert="blocks/footer" ></div>
+</footer>
+</html>

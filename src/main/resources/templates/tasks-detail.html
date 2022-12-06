@@ -1,0 +1,49 @@
+<!DOCTYPE html >
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Задачи</title>
+    <link th:href="@{/css/site.css}" rel="stylesheet" />
+    <div th:insert="blocks/header" ></div>
+</head>
+<body>
+<div class=ex1 ><h1 th:text="${tasks.getGroups().nameGroup}"/></div>
+<br/>
+<h2 align="center" th:text="${tasks.getDescriptionTask()}"/>
+
+<table  border="1" class="styled-table" >
+    <tr>
+        <th>Сотрудник</th>
+        <th>Статус выполнения</th>
+    </tr>
+    <tr th:each="el : ${userTaskStatus}">
+        <td th:text="${el.getUser().getFirstName()} + ' ' + ${el.getUser().getLastName()} + ' ' + ${el.getUser().getMiddleName()}"></td>
+        <td th:text="${el.getStatus().getNameStatus()}"/>
+        <td><a th:href="'/tasks/' +${tasks.getId()} +'/returnTask/'+ ${el.getId()}" class="delete">Вернуть</a></td>
+        <td><a th:href="'/tasks/' +${tasks.getId()} + '/doneTask/'+ ${el.getId()}" class="edit">Принято</a></td>
+    </tr>
+</table>
+<center><a th:href="'/tasks/' +${tasks.getId()} + '/doneTask'" class="button7">Закрыть задачу</a></center>
+<br/>
+<h3 align="center">Чат</h3>
+<div align="center">
+<div class='chat'>
+    <div class='chat-messages'>
+        <div class='chat-messages__content' id='messages' th:each="msg : ${messangers}" >
+            <p th:text="'вы: ' + ${msg.getMessageContent()}" align="right" th:if="${msg.getUser().getId} == ${currentUser.getId()}"/>
+            <p th:text=" ${msg.getUser().firstName} +' '+${msg.getUser().lastName} + ': ' + ${msg.getMessageContent()}" align="left" th:if="${msg.getUser().getId} != ${currentUser.getId()}"/>
+        </div>
+    </div>
+    <div class='chat-input'>
+        <form th:action="${'/tasks/'+tasks.getId()+'/send'}" method="get" th:object="${messangers}">
+            <input type='text' name="messageContent" class='chat-form__input' placeholder='Введите сообщение'>]
+            <input type='submit' class='chat-form__submit' value='=>'>
+        </form>
+    </div>
+</div>
+</div>
+</body>
+<footer>
+    <div th:insert="blocks/footer" ></div>
+</footer>
+</html>

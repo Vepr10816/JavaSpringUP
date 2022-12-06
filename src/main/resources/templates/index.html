@@ -1,0 +1,53 @@
+<!DOCTYPE html >
+<html  xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Пользователи</title>
+    <link th:href="@{/css/site.css}" rel="stylesheet" />
+    <div th:insert="blocks/header" ></div>
+</head>
+<body>
+<div class=ex1><h1>Сотрудники</h1></div>
+<form method="post"  th:action="${'/admin/filter'}">
+    <input type="text" name="searchString" placeholder="Поиск">
+    <button type="submit">Найти</button>
+</form>
+    <table  border="1" class="styled-table" >
+        <tr>
+            <th>Эл. почта</th>
+            <th>Роли</th>
+            <th>Фамилия</th>
+            <th>Имя</th>
+            <th>Отчество</th>
+            <th>Личные данные</th>
+        </tr>
+        <tr th:each="el : ${user_list}">
+            <td th:text="${el.username}"></td>
+            <td>
+                <div th:each="role : ${el.roles}">
+                    <p th:text="${role}"></p>
+                </div>
+            </td>
+            <td th:text="${el.firstName}"/>
+            <td th:text="${el.lastName}"/>
+            <td th:text="${el.middleName}"/>
+            <td>
+                <from th:each="prvtdata : ${el.getPrivateData()}">
+                    <p th:text="'Серия паспорта: '+${prvtdata.getSeries()}"/>
+                    <p th:text="'Номер паспорта: '+${prvtdata.getNumber()}"/>
+                    <p th:text="'Номер телефона: '+${prvtdata.getTelephoneNumber()}"/>
+                    <p th:text="'Адрес: '+${prvtdata.getEmployeeAddress()}"/>
+                </from>
+                <a th:href="'/admin/' + ${el.getPrivateData().getId()} + '/privateData'">Изменить</a>
+            </td>
+            <td><a th:href="'/admin/' + ${el.id} + '/userUpdate'" class="edit">Редактировать</a></td>
+            <td><a th:href="'/admin/' + ${el.id} + '/userRemove'" class="delete">Удалить</a></td>
+        </tr>
+    </table>
+<p></p>
+<center><a href="/admin/add" class="button7">Добваить сотрудника</a></center>
+</body>
+<footer>
+    <div th:insert="blocks/footer" ></div>
+</footer>
+</html>

@@ -1,0 +1,82 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Getting Started: Serving Web Content</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <link th:href="@{/css/site.css}" rel="stylesheet" />
+    <div th:insert="blocks/header" ></div>
+</head>
+<body>
+<div class=ex1><h1>Добавление сотрудника</h1></div>
+<form th:action="${'/admin/add'}" method="post">
+    <table border="1" class="styled-table">
+        <tr>
+            <th>Фамилия</th>
+            <th>Имя</th>
+            <th>Отчество</th>
+            <th>Эл. Почта</th>
+            <th>Пароль</th>
+            <th>Роль</th>
+        </tr>
+        <tr th:object="${users}">
+            <td>
+                <input type="text" name="firstName" placeholder="Введите Фамилию" >
+                <div style="color: red" th:if="${#fields.hasErrors('firstName')}" th:errors="*{firstName}"/>
+            </td>
+            <td>
+                <input type="text" name="lastName" placeholder="Введите Имя">
+                <div style="color: red" th:if="${#fields.hasErrors('lastName')}" th:errors="*{lastName}"/>
+            </td>
+            <td>
+                <input type="text" name="middleName" placeholder="Введите отчество">
+                <div style="color: red" th:if="${#fields.hasErrors('middleName')}" th:errors="*{middleName}"/>
+            </td>
+            <td>
+                <input type="text" name="username" placeholder="Эл. Почта">
+                <div style="color: red" th:if="${#fields.hasErrors('username')}" th:errors="*{username}"/>
+            </td>
+            <td>
+                <input type="text" name="password" placeholder="Пароль">
+                <div style="color: red" th:if="${#fields.hasErrors('password')}" th:errors="*{password}"/>
+            </td>
+            <td>
+                <div th:each="role : ${modelRoles}">
+                    <input type="radio" th:id="${role}"
+                           th:name="${'roles[]'}" th:value="${role}">
+                    <label th:text="${role}"></label>
+                </div>
+            </td>
+        </tr>
+        <tr>
+            <th>Серия паспорта</th>
+            <th>Номер паспорта</th>
+            <th>Телефон</th>
+            <th>Адрес</th>
+        </tr>
+        <tr th:object="${privatedats}">
+            <td>
+                <input type="number" name="series" placeholder="Введите Серию паспорта" >
+                <div style="color: red" th:if="${#fields.hasErrors('series')}" th:errors="*{series}"/>
+            </td>
+            <td>
+                <input type="number" name="number" placeholder="Введите Номер паспорта" >
+                <div style="color: red" th:if="${#fields.hasErrors('number')}" th:errors="*{number}"/>
+            </td>
+            <td>
+                <input type="number" name="telephoneNumber" placeholder="Введите Номер телефона" >
+                <div style="color: red" th:if="${#fields.hasErrors('telephoneNumber')}" th:errors="*{telephoneNumber}"/>
+            </td>
+            <td>
+                <input type="text" name="employeeAddress" placeholder="Введите адрес" >
+                <div style="color: red" th:if="${#fields.hasErrors('employeeAddress')}" th:errors="*{employeeAddress}"/>
+            </td>
+        </tr>
+
+    </table>
+    <div align="center"><button type="submit" class="green">Добавить сотруника</button></div>
+</form>
+</body>
+<footer>
+    <div th:insert="blocks/footer" ></div>
+</footer>
+</html>

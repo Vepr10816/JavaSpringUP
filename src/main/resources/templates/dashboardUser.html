@@ -1,0 +1,19 @@
+<!DOCTYPE html >
+<html lang="en" xmlns:sec="http://www.w3.org/1999/xhtml">
+<head>
+  <meta charset="UTF-8">
+  <title>Пользователи</title>
+  <link th:href="@{/css/site.css}" rel="stylesheet" />
+  <div th:insert="blocks/header" ></div>
+  <%@ taglib prefix="security" uri="http://www.springframework.org/security/tags" %>
+</head>
+<body>
+<div th:each="el : ${user}">
+  <input th:text="${el.firstName}"/>
+
+</div>
+</body>
+<footer>
+  <div th:insert="blocks/footer" ></div>
+</footer>
+</html>

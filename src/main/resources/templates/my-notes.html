@@ -1,0 +1,29 @@
+<!DOCTYPE html >
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Заметки</title>
+    <link th:href="@{/css/site.css}" rel="stylesheet" />
+    <div th:insert="blocks/header" ></div>
+</head>
+<body>
+<div class=ex1><h1>Заметки</h1></div>
+<form method="post"  th:action="${'/myNotes/filter'}">
+    <input type="text" name="searchString" placeholder="Поиск">
+    <button type="submit">Найти</button>
+</form>
+<table  border="1" class="styled-table">
+    <tr th:each="el : ${notes_list}">
+        <td th:text="${el.dateNotes} + ' ' + ${el.timeNotes}"></td>
+        <td th:text="${el.nameNotes}"/>
+        <td><a th:href="'/myNotes/' + ${el.id} + '/detail'" class="edit">Просмотр</a></td>
+        <td><a th:href="'/myNotes/' + ${el.id} + '/delete'" class="delete">Удалить</a></td>
+    </tr>
+</table>
+<p></p>
+<center><td><a th:href="'/myNotes/add'" class="edit">Создать заметку</a></td></center>
+</body>
+<footer>
+    <div th:insert="blocks/footer" ></div>
+</footer>
+</html>

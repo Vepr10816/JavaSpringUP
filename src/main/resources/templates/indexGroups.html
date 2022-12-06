@@ -1,0 +1,41 @@
+<!DOCTYPE html >
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>Пользователи</title>
+  <link th:href="@{/css/site.css}" rel="stylesheet" />
+  <div th:insert="blocks/header" ></div>
+</head>
+<body>
+<div class=ex1><h1>Группы</h1></div>
+<form method="post"  th:action="${'/groups/filter'}">
+  <input type="text" name="searchString" placeholder="Поиск">
+  <button type="submit">Найти</button>
+</form>
+<table  border="1" class="styled-table" >
+  <tr>
+    <th>Наименование группы</th>
+    <th>Участники</th>
+  </tr>
+  <tr th:each="el : ${groups_list}">
+    <td th:text="${el.nameGroup}"></td>
+    <td>
+      <form th:each="groupsusers : ${el.getGroupUserCollection()}">
+        <div th:each="users : ${groupsusers.getUser()}">
+          <a th:text="${users.getFirstName()} + ' ' + ${users.getLastName()} + ' ' + ${users.getMiddleName()}"/>
+          <a th:href="'groups/'+ ${el.id} + '/'+ ${users.id} + '/remove'">Исключить</a>
+        </div>
+      </form>
+      <a th:href="'groups/'+ ${el.id} +'/adduser'">Добавить</a>
+    </td>
+    <td><a th:href="'/groups/' + ${el.id} + '/Update'" class="edit">Редактировать</a></td>
+    <td><a th:href="'/groups/' + ${el.id} + '/Remove'" class="delete">Удалить</a></td>
+  </tr>
+</table>
+<p></p>
+<center><a href="/groups/add" class="button7">Создать группу</a></center>
+</body>
+<footer>
+  <div th:insert="blocks/footer" ></div>
+</footer>
+</html>

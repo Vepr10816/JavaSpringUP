@@ -1,0 +1,59 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <title>Getting Started: Serving Web Content</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+  <link th:href="@{/css/site.css}" rel="stylesheet" />
+  <div th:insert="blocks/header" ></div>
+</head>
+<body>
+<div class=ex1><h1>Изменение сотрудника</h1></div>
+<form method="post">
+  <table border="1" class="styled-table">
+    <tr>
+      <th>Фамилия</th>
+      <th>Имя</th>
+      <th>Отчество</th>
+      <th>Эл. Почта</th>
+      <th>Пароль</th>
+      <th>Роль</th>
+    </tr>
+    <tr th:object="${modelUser}">
+      <td>
+        <input type="text" name="firstName" placeholder="Введите Фамилию" th:value="*{firstName}">
+        <div style="color: red" th:if="${#fields.hasErrors('firstName')}" th:errors="*{firstName}"/>
+      </td>
+      <td>
+        <input type="text" name="lastName" placeholder="Введите Имя" th:value="*{lastName}">
+        <div style="color: red" th:if="${#fields.hasErrors('lastName')}" th:errors="*{lastName}" />
+      </td>
+      <td>
+        <input type="text" name="middleName" placeholder="Введите отчество" th:value="*{middleName}">
+        <div style="color: red" th:if="${#fields.hasErrors('middleName')}" th:errors="*{middleName}" />
+      </td>
+      <td>
+        <input type="text" name="username" placeholder="Эл. Почта" th:value="*{username}">
+        <div style="color: red" th:if="${#fields.hasErrors('username')}" th:errors="*{username}" />
+      </td>
+      <td>
+        <input type="text" name="password" placeholder="Пароль" th:value="*{password}">
+        <div style="color: red" th:if="${#fields.hasErrors('password')}" th:errors="*{password}" />
+      </td>
+      <td>
+        <div th:each="role : ${modelRoles}">
+          <input type="radio" th:id="${role}"
+                 th:name="${'roles[]'}" th:value="${role}"
+                 th:checked="${#lists.contains(modelUser.roles,role)}">
+
+          <label th:text="${role}"></label>
+        </div>
+      </td>
+    </tr>
+  </table>
+  <div align="center"><button type="submit" class="green">Изменить сотруника</button></div>
+</form>
+</body>
+<footer>
+  <div th:insert="blocks/footer" ></div>
+</footer>
+</html>

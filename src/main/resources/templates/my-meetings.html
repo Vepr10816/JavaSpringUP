@@ -1,0 +1,39 @@
+<!DOCTYPE html >
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Мои Встречи</title>
+    <link th:href="@{/css/site.css}" rel="stylesheet" />
+    <div th:insert="blocks/header" ></div>
+</head>
+<body>
+<div class=ex1><h1>Мои Встречи</h1></div>
+<table  border="1" class="styled-table" >
+    <tr>
+        <th>Наименование встречи</th>
+        <th>Группа</th>
+        <th>Время</th>
+        <th>Тип встречи</th>
+        <th>Описание</th>
+        <th>Назначил</th>
+    </tr>
+    <form th:each="el : ${groupUser_list}">
+    <tr th:each="elem : ${el.getGroups().getMeetingsCollection()}">
+        <td th:text="${elem.meetingsName}"></td>
+        <td th:text="${elem.getGroups().nameGroup}"/>
+        <td th:text="${elem.meetingsDate} + ' ' + ${elem.meetingsTime}"/>
+        <td th:text="${elem.getTypemeetings().getMeetingsType()}"/>
+        <td th:text="${elem.meetingsDescription}"/>
+        <td th:text="${elem.getUser().firstName} + ' ' + ${elem.getUser().lastName} + ' ' + ${elem.getUser().middleName}"/>
+        <td th:if="${elem.getTypemeetings().getId()} == 2">
+            <a th:href="${elem.meetingsUrl}" class="edit">Перейти</a>
+        </td>
+    </tr>
+    </form>
+</table>
+<p></p>
+</body>
+<footer>
+    <div th:insert="blocks/footer" ></div>
+</footer>
+</html>

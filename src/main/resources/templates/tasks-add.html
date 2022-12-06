@@ -1,0 +1,55 @@
+<!DOCTYPE html >
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Задачи</title>
+    <link th:href="@{/css/site.css}" rel="stylesheet" />
+    <div th:insert="blocks/header" ></div>
+</head>
+<body>
+<form th:action="${'/tasks/add'}" method="post">
+<div class=ex1><h1>Создание Задания</h1></div>
+<table  border="1" class="styled-table" >
+    <tr>
+        <th>Наименование группы</th>
+        <th>Участники</th>
+        <th>Описание задания</th>
+        <th>Дата сдачи</th>
+        <th>Время сдачи</th>
+    </tr>
+    <tr>
+        <td th:object="${groups}">
+            <input type="text" name="nameGroup" placeholder="Название группы">
+            <div style="color: red" th:if="${#fields.hasErrors('nameGroup')}" th:errors="*{nameGroup}"/>
+        </td>
+        <td>
+            <div th:each="el : ${users}" >
+                <input type="checkbox" th:id="${users}"
+                       th:name="${'users[]'}" th:value="${el.id}">
+                <label th:text="${el.firstName} + ' ' + ${el.lastName} + ' ' + ${el.middleName}"></label>
+            </div>
+        </td>
+        <form th:object="${tasks}">
+        <td>
+            <input type="text" name="descriptionTask" placeholder="Описание задания">
+            <div style="color: red" th:if="${#fields.hasErrors('descriptionTask')}" th:errors="*{descriptionTask}"/>
+        </td>
+        <td>
+            <input type="date" name="deadLineDate" placeholder="Дата дэдлайна">
+            <div style="color: red" th:if="${#fields.hasErrors('deadLineDate')}" th:errors="*{deadLineDate}"/>
+        </td>
+        <td>
+            <input type="time" name="deadLineTime" placeholder="Время дэдлайна" step="2">
+            <div style="color: red" th:if="${#fields.hasErrors('deadLineTime')}" th:errors="*{deadLineTime}" />
+        </td>
+        </form>
+    </tr>
+</table>
+<p></p>
+    <div align="center"><button type="submit" class="green">Создать задачу</button></div>
+</form>
+</body>
+<footer>
+    <div th:insert="blocks/footer" ></div>
+</footer>
+</html>

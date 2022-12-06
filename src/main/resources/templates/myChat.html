@@ -1,0 +1,62 @@
+<!DOCTYPE html >
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>Мои задачи</title>
+  <link th:href="@{/css/site.css}" rel="stylesheet" />
+  <div th:insert="blocks/header" ></div>
+</head>
+<body>
+<div class=ex1><h1>Мои задачи</h1></div>
+<table  border="1" class="styled-table" >
+  <tr>
+    <th>Наименование группы</th>
+    <th>Участники</th>
+    <th>Описание задания</th>
+    <th>Дедлайн</th>
+    <th>Назначил</th>
+    <th>Статус задачи</th>
+    <th>Статус выполнения</th>
+  </tr>
+  <tr th:each="el : ${userTaskStatus_list}">
+    <td th:text="${el.getTasks().getGroups().getNameGroup()}"></td>
+    <td>
+      <!--      <form th:each="groupsusers : ${el.getGroups().getGroupUserCollection()}">-->
+      <div th:each="users : ${el.getTasks().getGroups().getGroupUserCollection()}">
+        <a th:text="${users.getUser().firstName} + ' ' + ${users.getUser().getLastName()} + ' ' + ${users.getUser().getMiddleName()}"/>
+      </div>
+      <!--      </form>-->
+    </td>
+    <td th:text="${el.getTasks().getDescriptionTask()}"/>
+    <td th:text="${el.getTasks().getDeadLineDate()} + ' ' + ${el.getTasks().getDeadLineTime()}"/>
+    <td th:text="${el.getTasks().getUser().firstName} + ' ' + ${el.getTasks().getUser().lastName} + ' ' + ${el.getTasks().getUser().middleName}"/>
+    <td th:text="${el.getTasks().getStatus().nameStatus}"/>
+    <!--    <form th:each="st : ${userTaskStatus_list}">-->
+    <td th:text="${el.getStatus().nameStatus}"/>
+    <!--    </form>-->
+    <td><a th:href="'/myTasks/' + ${el.id} + '/doneTask'" class="edit">Выполнено</a>
+    <td><a th:href="'/myTasks/' + ${el.id} + '/canselTask'" class="delete">Отказаться</a></td>
+  </tr>
+</table>
+<p></p>
+<div class='chat'>
+  <div class='chat-messages'>
+    <div class='chat-messages__content' id='messages' th:each="msg : ${messanger}" >
+      <p th:text="'вы: ' + ${msg.getMessageContent()}" align="right" th:if="${msg.getUser().getId} == ${currentUser.getId()}"/>
+      <p th:text=" ${msg.getUser().firstName} +' '+${msg.getUser().lastName} + ': ' + ${msg.getMessageContent()}" align="left" th:if="${msg.getUser().getId} != ${currentUser.getId()}"/>
+    </div>
+  </div>
+  <div class='chat-input'>
+    <form th:action="${'/myTasks/'+userTaskStatus_list.id+'/send'}" th:object="${messanger}">
+      <input type='text' name="messageContent" class='chat-form__input' placeholder='Введите сообщение'>]
+      <input type='submit' class='chat-form__submit' value='=>'>
+    </form>
+  </div>
+</div>
+<br>
+<center><a th:href="'/myTasks/'" class="edit">Назад</a></center>
+</body>
+<footer>
+  <div th:insert="blocks/footer" ></div>
+</footer>
+</html>

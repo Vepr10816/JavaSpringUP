@@ -1,0 +1,43 @@
+<!DOCTYPE html >
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>Встречи</title>
+  <link th:href="@{/css/site.css}" rel="stylesheet" />
+  <div th:insert="blocks/header" ></div>
+</head>
+<body>
+<div class=ex1><h1>Встречи</h1></div>
+<form method="post"  th:action="${'/meetings/filter'}">
+  <input type="text" name="searchString" placeholder="Поиск">
+  <button type="submit">Найти</button>
+</form>
+<table  border="1" class="styled-table" >
+  <tr>
+    <th>Наименование встречи</th>
+    <th>Группа</th>
+    <th>Время</th>
+    <th>Тип встречи</th>
+    <th>Описание</th>
+    <th>Назначил</th>
+  </tr>
+  <tr th:each="el : ${meetings_list}">
+    <td th:text="${el.meetingsName}"></td>
+    <td th:text="${el.getGroups().getNameGroup()}"/>
+    <td th:text="${el.meetingsDate} + ' ' + ${el.meetingsTime}"/>
+    <td th:text="${el.getTypemeetings().getMeetingsType()}"/>
+    <td th:text="${el.meetingsDescription}"/>
+    <td th:text="${el.getUser().firstName} + ' ' + ${el.getUser().lastName} + ' ' + ${el.getUser().middleName}"/>
+    <td th:if="${el.getTypemeetings().getId()} == 2">
+      <a th:href="${el.meetingsUrl}">Перейти</a>
+    </td>
+    <td><a th:href="'/meetings/' + ${el.id}" class="delete">Удалить</a></td>
+  </tr>
+</table>
+<p></p>
+<center><a href="/meetings/add" class="button7">Создать встречу</a></center>
+</body>
+<footer>
+  <div th:insert="blocks/footer" ></div>
+</footer>
+</html>

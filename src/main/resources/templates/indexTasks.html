@@ -1,0 +1,47 @@
+<!DOCTYPE html >
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Задачи</title>
+    <link th:href="@{/css/site.css}" rel="stylesheet" />
+    <div th:insert="blocks/header" ></div>
+</head>
+<body>
+<div class=ex1><h1>Задания</h1></div>
+<form method="post"  th:action="${'/tasks/filter'}">
+    <input type="text" name="searchString" placeholder="Поиск">
+    <button type="submit">Найти</button>
+</form>
+<table  border="1" class="styled-table" >
+    <tr>
+        <th>Наименование группы</th>
+        <th>Участники</th>
+        <th>Описание задания</th>
+        <th>Дедлайн</th>
+        <th>Назначил</th>
+        <th>Статус</th>
+    </tr>
+    <tr th:each="el : ${tasks_list}">
+        <td th:text="${el.getGroups().getNameGroup()}"></td>
+        <td>
+            <form th:each="groupsusers : ${el.getGroups().getGroupUserCollection()}">
+                <div th:each="users : ${groupsusers.getUser()}">
+                    <a th:text="${users.getFirstName()} + ' ' + ${users.getLastName()} + ' ' + ${users.getMiddleName()}"/>
+                </div>
+            </form>
+        </td>
+        <td th:text="${el.descriptionTask}"/>
+        <td th:text="${el.deadLineDate} + ' ' + ${el.deadLineTime}"/>
+        <td th:text="${el.getUser().firstName} + ' ' + ${el.getUser().lastName} + ' ' + ${el.getUser().middleName}"/>
+        <td th:text="${el.getStatus().getNameStatus()}"/>
+        <td><a th:href="'/tasks/' + ${el.id} + '/Remove'" class="delete">Удалить</a></td>
+        <td><a th:href="'/tasks/' + ${el.id}" class="edit">Просмотр</a></td>
+    </tr>
+</table>
+<p></p>
+<center><a href="/tasks/add" class="button7">Создать задачу</a></center>
+</body>
+<footer>
+    <div th:insert="blocks/footer" ></div>
+</footer>
+</html>

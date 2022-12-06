@@ -1,0 +1,65 @@
+<!DOCTYPE html >
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>Создание встречи</title>
+  <link th:href="@{/css/site.css}" rel="stylesheet" />
+  <div th:insert="blocks/header" ></div>
+</head>
+<body>
+<form th:action="${'/meetings/add'}" method="post">
+  <div class=ex1><h1>Создание Встречи</h1></div>
+  <table  border="1" class="styled-table" >
+    <tr>
+      <th>Наименование встречи</th>
+      <th>Группа</th>
+      <th>Дата</th>
+      <th>Время</th>
+      <th>Тип встречи</th>
+      <th>Описание</th>
+    </tr>
+    <tr th:object="${meetings}">
+      <td>
+        <input type="text" name="meetingsName" placeholder="Название встречи">
+        <div style="color: red" th:if="${#fields.hasErrors('meetingsName')}" th:errors="*{meetingsName}"/>
+      </td>
+      </td>
+      <td>
+        <select  name="nameGroup">
+          <div th:each="element : ${groups}">
+            <option th:text="${element.nameGroup}"></option>
+          </div>
+        </select>
+      </td>
+      <td>
+        <input type="date" name="meetingsDate" placeholder="Дата">
+        <div style="color: red" th:if="${#fields.hasErrors('meetingsDate')}" th:errors="*{meetingsDate}" />
+      </td>
+      <td>
+        <input type="time" name="meetingsTime" placeholder="Время" step="2">
+        <div style="color: red" th:if="${#fields.hasErrors('meetingsTime')}" th:errors="*{meetingsTime}" />
+      </td>
+      <td>
+        <select  name="meetingsType">
+          <div th:each="tpm : ${typemeetings}">
+            <option th:text="${tpm.meetingsType}"></option>
+          </div>
+        </select>
+      </td>
+      <td>
+        <textarea type="text" name="meetingsDescription" placeholder="Описание"></textarea>
+        <div style="color: red" th:if="${#fields.hasErrors('meetingsDescription')}" th:errors="*{meetingsDescription}" />
+      </td>
+      <td>
+        <input type="text" name="meetingsUrl" placeholder="Ссылка">
+      </td>
+    </tr>
+  </table>
+  <p></p>
+  <div align="center"><button type="submit" class="green">Создать встречу</button></div>
+</form>
+</body>
+<footer>
+  <div th:insert="blocks/footer" ></div>
+</footer>
+</html>
