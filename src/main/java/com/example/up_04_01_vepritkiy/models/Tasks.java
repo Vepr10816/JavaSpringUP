@@ -2,6 +2,9 @@ package com.example.up_04_01_vepritkiy.models;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 import java.sql.Date;
 import java.sql.Time;
 import java.util.Collection;
@@ -14,6 +17,7 @@ public class Tasks {
     private Long id;
 
     @NotBlank(message = "Поле не заполнено")
+    @Size(min = 2, max = 100, message = "Не менее 2 не более 100 символов")
     private String descriptionTask;
 
     private Date deadLineDate;

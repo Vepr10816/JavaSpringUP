@@ -1,10 +1,7 @@
 package com.example.up_04_01_vepritkiy.models;
 
 import javax.persistence.*;
-import javax.validation.constraints.Email;
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Pattern;
+import javax.validation.constraints.*;
 
 import java.util.Collection;
 import java.util.List;
@@ -19,6 +16,7 @@ public class User {
     private Long id;
     @NotBlank(message = "Поле электронной почты не заполнено")
     @Email(message = "Некорректный ввод электронной почты")
+    @Size(max = 50, message = "не более 50 символов")
     private String username;
     @NotBlank(message = "Поле пароля не зполнено")
     @Pattern(regexp = "^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%^&+=])(?=\\S+$).{8,}$",message = "Пароль должен соответствовать следующим требованиям: Не менее 8 символов\n" +
@@ -26,13 +24,17 @@ public class User {
             "Содержит по крайней мере один нижний альфа-символ и один верхний альфа-символ\n" +
             "Содержит хотя бы один символ в наборе специальных символов (и т.д.)@#%$^\n" +
             "Не содержит пробела, табуляции и т.д.")
+    @Size(max = 20, message = "не более 20 символов")
     private String password;
     private boolean active;
     @NotBlank(message = "Поле фамилии не зполнено")
+    @Size(min = 2, max = 20, message = "Не менее 2 не более 20 символов")
     private String lastName;
     @NotBlank(message = "Поле имени не зполнено")
+    @Size(min = 2, max = 20, message = "Не менее 2 не более 20 символов")
     private String firstName;
     @NotBlank(message = "Поле отчества не зполнено")
+    @Size(min = 2, max = 20, message = "Не менее 2 не более 20 символов")
     private String middleName;
 
     @ElementCollection(targetClass = Role.class, fetch = FetchType.EAGER)

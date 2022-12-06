@@ -32,11 +32,11 @@
         </select>
       </td>
       <td>
-        <input type="date" name="meetingsDate" placeholder="Дата">
+        <input type="date" name="meetingsDate" placeholder="Дата" required>
         <div style="color: red" th:if="${#fields.hasErrors('meetingsDate')}" th:errors="*{meetingsDate}" />
       </td>
       <td>
-        <input type="time" name="meetingsTime" placeholder="Время" step="2">
+        <input type="time" name="meetingsTime" placeholder="Время" step="2" required>
         <div style="color: red" th:if="${#fields.hasErrors('meetingsTime')}" th:errors="*{meetingsTime}" />
       </td>
       <td>

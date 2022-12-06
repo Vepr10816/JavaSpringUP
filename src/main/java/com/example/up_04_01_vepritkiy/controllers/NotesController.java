@@ -70,8 +70,17 @@ public class NotesController {
         String time = new SimpleDateFormat("HH:mm:ss").format(new Date());
         notes.setDateNotes(java.sql.Date.valueOf(date));
         notes.setTimeNotes(Time.valueOf(time));
+        System.out.println("ывод: "+notes.getNameNotes());
         if(bindingResult.hasErrors())
-            return "my-notes-add";
+        {
+            if(notes.getDeadLineDate() == null && !notes.getNameNotes().isEmpty())
+            {
+                notesRepository.save(notes);
+                return "redirect:/myNotes";
+            }
+            else
+                return "my-notes-add";
+        }
         notesRepository.save(notes);
         return "redirect:/myNotes";
     }
@@ -86,8 +95,6 @@ public class NotesController {
     @PostMapping("/myNotes/{id}/detail")
     public String myNotesDetailPost(@ModelAttribute("notes") @Valid Notes notes, BindingResult bindingResult)
     {
-        if(bindingResult.hasErrors())
-            return "my-notes-detail";
         String currentUserName = SecurityContextHolder.getContext().getAuthentication().getName();
         User user = userRepository.findUserByUsername(currentUserName);
         notes.setUser(user);
@@ -95,6 +102,16 @@ public class NotesController {
         String time = new SimpleDateFormat("HH:mm:ss").format(new Date());
         notes.setDateNotes(java.sql.Date.valueOf(date));
         notes.setTimeNotes(Time.valueOf(time));
+        if(bindingResult.hasErrors())
+        {
+            if(notes.getDeadLineDate() == null && !notes.getNameNotes().isEmpty())
+            {
+                notesRepository.save(notes);
+                return "redirect:/myNotes";
+            }
+            else
+                return "my-notes-detail";
+        }
         notesRepository.save(notes);
         return "redirect:/myNotes";
     }

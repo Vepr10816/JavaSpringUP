@@ -35,11 +35,11 @@
             <div style="color: red" th:if="${#fields.hasErrors('descriptionTask')}" th:errors="*{descriptionTask}"/>
         </td>
         <td>
-            <input type="date" name="deadLineDate" placeholder="Дата дэдлайна">
+            <input type="date" name="deadLineDate" placeholder="Дата дэдлайна" required>
             <div style="color: red" th:if="${#fields.hasErrors('deadLineDate')}" th:errors="*{deadLineDate}"/>
         </td>
         <td>
-            <input type="time" name="deadLineTime" placeholder="Время дэдлайна" step="2">
+            <input type="time" name="deadLineTime" placeholder="Время дэдлайна" step="2" required>
             <div style="color: red" th:if="${#fields.hasErrors('deadLineTime')}" th:errors="*{deadLineTime}" />
         </td>
         </form>

@@ -2,6 +2,7 @@ package com.example.up_04_01_vepritkiy.models;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Size;
 
 @Entity
 public class Messanger {
@@ -10,6 +11,7 @@ public class Messanger {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
+    @Size(min = 2, max = 100, message = "Не менее 2 и не более 100 символов")
     private String messageContent;
 
     @ManyToOne(optional = true)

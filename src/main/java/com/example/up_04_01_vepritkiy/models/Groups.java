@@ -2,6 +2,7 @@ package com.example.up_04_01_vepritkiy.models;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Size;
 import java.util.Collection;
 
 @Entity
@@ -11,6 +12,7 @@ public class Groups {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
     @NotBlank(message = "Поле не заполнено")
+    @Size(min = 2, max = 15, message = "Не менее 2 и не более 15 символов")
     private String nameGroup;
 
     @OneToMany(mappedBy = "groups", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
